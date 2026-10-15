@@ -1,0 +1,11 @@
+{
+  "note": "node-run.mjs, same wasm, Node 24.21.0 (V8), WSL2 desktop. First sanity run; the tester's two invocations gave prove 19.2 to 22.3 s and key 14.1 to 14.9 s.",
+  "pool": "ironwood-v3",
+  "node": "v24.21.0",
+  "keyBuildMs": 13166,
+  "runs": [
+    {"run": 1, "actions": 2, "proveMs": 19914, "verifyMs": 10667, "verified": true},
+    {"run": 2, "actions": 2, "proveMs": 19852, "verifyMs": 168, "verified": true}
+  ],
+  "wasmMemoryPeakBytes": 105644032
+}

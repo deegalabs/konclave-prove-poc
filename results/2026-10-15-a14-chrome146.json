@@ -1,0 +1,28 @@
+{
+  "note": "Raw output sent by Daniel, 2026-10-15. Galaxy A14, 4 GB RAM (Daniel; not the A52 of the plan), Chrome 146, USB attached (adb reverse, localhost). Real Android version not recorded (UA is frozen at 10). Run 3 is a 3x outlier with no known cause. meta.commit f09189d is the HEAD at build time (source = 024f2d6); rebuild from a clean commit before the final report.",
+  "runs": [
+    {
+      "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 836, "proveMs": 180466, "verifyMs": 113119, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 511, "proveMs": 183258, "verifyMs": 1506, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 510, "proveMs": 558832, "verifyMs": 1600, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 544, "proveMs": 290800, "verifyMs": 1521, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 537, "proveMs": 278827, "verifyMs": 1516, "actions": 2, "verified": true}
+      ],
+      "error": null,
+      "wasmBytes": 2481726,
+      "wasmLoadMs": 116,
+      "keyBuildMs": 137012,
+      "wasmMemoryAfterKeyBytes": 33751040,
+      "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "f09189d", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T18:05:20Z"},
+      "device": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36",
+        "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false
+      },
+      "medianProveMs": 278827,
+      "at": "2026-10-15T19:57:17.670Z"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[package]
+name = "konclave-prove-poc"
+version = "0.0.0"
+edition = "2021"
+publish = false
+license = "MIT OR Apache-2.0"
+description = "Orchard and Ironwood proving in WebAssembly on a phone: a measurement harness."
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+orchard = { version = "0.15.5", default-features = false, features = ["circuit"] }
+rand = { version = "0.8", default-features = false, features = ["std", "std_rng"] }
+getrandom = { version = "0.2", features = ["js"] }
+wasm-bindgen = "0.2"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

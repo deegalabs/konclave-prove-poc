@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konclave proving PoC</title>
+<style>body{font:16px system-ui;margin:1rem;max-width:42rem}button{font:inherit;padding:.6rem 1rem;margin:.2rem}pre{white-space:pre-wrap;word-break:break-all;background:#eee;padding:.5rem}</style>
+<h1>Proving PoC</h1>
+<p>One 2-action proof of the orchard 0.15.5 Action circuit, WebAssembly, single thread, synthetic data. No vault, no network, nothing leaves this page.</p>
+<label>Runs <input id="runs" type="number" value="5" min="1" max="10" style="width:4rem"></label>
+<label><input id="verify" type="checkbox" checked> verify after proving</label>
+<div>
+  <button data-pool="orchard-v2">Prove Orchard (NU6.2 circuit)</button>
+  <button data-pool="ironwood-v3">Prove Ironwood (NU6.3 circuit)</button>
+</div>
+<p id="status">idle</p>
+<pre id="out"></pre>
+<button id="copy">Copy JSON</button>
+<script type="module">
+const meta = await fetch('./pkg/meta.json').then(r => r.json()).catch(() => ({}));
+const out = document.getElementById('out'), status = document.getElementById('status');
+const setDisabled = (v) => { for (const x of document.querySelectorAll('button')) x.disabled = v; };
+let last = null;
+for (const b of document.querySelectorAll('button[data-pool]')) {
+  b.onclick = () => {
+    setDisabled(true);
+    status.textContent = 'running...';
+    const w = new Worker('./worker.js', { type: 'module' });
+    w.onmessage = (ev) => {
+      if (ev.data.progress) { status.textContent = ev.data.progress; return; }
+      const r = ev.data.done;
+      last = {
+        ...r, meta,
+        device: {
+          userAgent: navigator.userAgent,
+          hardwareConcurrency: navigator.hardwareConcurrency,
+          deviceMemoryGB: navigator.deviceMemory ?? null,
+          secureContext: isSecureContext,
+          crossOriginIsolated,
+        },
+        medianProveMs: median(r.runs.map(x => x.proveMs)),
+        at: new Date().toISOString(),
+      };
+      out.textContent = JSON.stringify(last, null, 2);
+      status.textContent = r.error ? 'error: ' + r.error : 'done';
+      setDisabled(false);
+      w.terminate();
+    };
+    w.onerror = (e) => { status.textContent = 'worker error: ' + (e.message || e); setDisabled(false); };
+    w.postMessage({ pool: b.dataset.pool, runs: +document.getElementById('runs').value, verify: document.getElementById('verify').checked });
+  };
+}
+document.getElementById('copy').onclick = () => navigator.clipboard?.writeText(out.textContent);
+function median(a) { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }
+</script>

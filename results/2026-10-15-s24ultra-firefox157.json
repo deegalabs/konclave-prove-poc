@@ -1,0 +1,28 @@
+{
+  "note": "Raw output sent by Daniel, 2026-10-15, right after the Chrome run on the same phone. Galaxy S24 Ultra, 12 GB RAM (Daniel), Android 16 (from the Firefox UA), Firefox 157, USB attached (adb reverse, localhost). Firefox does not expose deviceMemory. meta.commit f09189d is the HEAD at build time (source = 024f2d6).",
+  "runs": [
+    {
+      "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 100, "proveMs": 18535, "verifyMs": 15332, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 90, "proveMs": 25911, "verifyMs": 210, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 89, "proveMs": 25864, "verifyMs": 211, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 89, "proveMs": 25858, "verifyMs": 211, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 89, "proveMs": 25837, "verifyMs": 212, "actions": 2, "verified": true}
+      ],
+      "error": null,
+      "wasmBytes": 2481726,
+      "wasmLoadMs": 155,
+      "keyBuildMs": 15626,
+      "wasmMemoryAfterKeyBytes": 33751040,
+      "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "f09189d", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T18:05:20Z"},
+      "device": {
+        "userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:157.0) Gecko/157.0 Firefox/157.0",
+        "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false
+      },
+      "medianProveMs": 25858,
+      "at": "2026-10-15T20:14:00.111Z"
+    }
+  ]
+}

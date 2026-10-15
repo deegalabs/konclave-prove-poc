@@ -1,0 +1,51 @@
+{
+  "note": "Raw output pasted by Daniel from the page, 2026-10-15. Galaxy A72, Chrome 155, connected by USB (adb reverse, localhost). meta.commit f09189d is the HEAD at build time; the built source had the prepare/prove/verify split that is committed in 024f2d6. Rebuild from a clean commit before the final report.",
+  "runs": [
+    {
+      "pool": "orchard-v2",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 229, "proveMs": 49575, "verifyMs": 27303, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 126, "proveMs": 49671, "verifyMs": 365, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 125, "proveMs": 49470, "verifyMs": 364, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 126, "proveMs": 49433, "verifyMs": 364, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 122, "proveMs": 49448, "verifyMs": 362, "actions": 2, "verified": true}
+      ],
+      "error": null,
+      "wasmBytes": 2481726,
+      "wasmLoadMs": 126,
+      "keyBuildMs": 33540,
+      "wasmMemoryAfterKeyBytes": 33751040,
+      "wasmMemoryPeakBytes": 105709568,
+      "meta": {"commit": "f09189d", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T18:05:20Z"},
+      "device": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+        "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false
+      },
+      "medianProveMs": 49470,
+      "at": "2026-10-15T18:27:06.921Z"
+    },
+    {
+      "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 236, "proveMs": 49643, "verifyMs": 27157, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 132, "proveMs": 49686, "verifyMs": 367, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 130, "proveMs": 49579, "verifyMs": 367, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 131, "proveMs": 49536, "verifyMs": 375, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 138, "proveMs": 49579, "verifyMs": 365, "actions": 2, "verified": true}
+      ],
+      "error": null,
+      "wasmBytes": 2481726,
+      "wasmLoadMs": 86,
+      "keyBuildMs": 33633,
+      "wasmMemoryAfterKeyBytes": 33751040,
+      "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "f09189d", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T18:05:20Z"},
+      "device": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+        "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false
+      },
+      "medianProveMs": 49579,
+      "at": "2026-10-15T18:35:59.748Z"
+    }
+  ]
+}
