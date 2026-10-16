@@ -1,0 +1,17 @@
+{
+  "name": "konclave-prove-poc",
+  "type": "module",
+  "description": "Orchard and Ironwood proving in WebAssembly on a phone: a measurement harness.",
+  "version": "0.0.0",
+  "license": "MIT OR Apache-2.0",
+  "files": [
+    "konclave_prove_poc_bg.wasm",
+    "konclave_prove_poc.js",
+    "LICENSE-APACHE",
+    "LICENSE-MIT"
+  ],
+  "main": "konclave_prove_poc.js",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
