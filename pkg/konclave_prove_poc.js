@@ -49,11 +49,24 @@ export class Poc {
         }
     }
     /**
-     * Builds the unproven 2-action bundle. Returns the number of actions.
+     * Builds the unproven 2-action bundle (one output, padded to 2 actions). Returns the number of actions.
      * @returns {number}
      */
     prepare() {
         const ret = wasm.poc_prepare(this.__wbg_ptr);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] >>> 0;
+    }
+    /**
+     * Builds an unproven bundle with `outputs` zero-value outputs to the test address. The builder pads
+     * to at least 2 actions, so the action count is max(2, outputs). Returns the number of actions.
+     * @param {number} outputs
+     * @returns {number}
+     */
+    prepare_n(outputs) {
+        const ret = wasm.poc_prepare_n(this.__wbg_ptr, outputs);
         if (ret[2]) {
             throw takeFromExternrefTable0(ret[1]);
         }

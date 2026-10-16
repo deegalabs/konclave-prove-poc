@@ -1,0 +1,1 @@
+{"pool":"ironwood-v3","outputs":16,"node":"v24.21.0","keyBuildMs":14071,"runs":[{"run":1,"actions":16,"proveMs":130600,"verifyMs":10925,"verified":true},{"run":2,"actions":16,"proveMs":129389,"verifyMs":447,"verified":true},{"run":3,"actions":16,"proveMs":129342,"verifyMs":438,"verified":true}],"wasmMemoryPeakBytes":414842880}
