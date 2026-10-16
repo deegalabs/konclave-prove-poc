@@ -1,0 +1,9 @@
+{
+  "note": "ChainSafe/zcash-wasm-benchmark at commit 2c6d6db (2024-08-06), UNCHANGED, built with its pinned nightly-2024-02-26 (just build-rust, parallel feature) and its demo page (yarn + parcel build). Driven in headless Chromium 151 on the WSL2 desktop (16 logical cores) with Playwright, served with COOP/COEP, pool set to N threads, shielded pool Orchard, Proof Generation with 1 spend. Console lines are the page's own output. Desktop only: its results go to the browser console and were not collected on the phones. Its orchard is 0.8.0 (pre-Ironwood).",
+  "runs": [
+    {"threads": 4, "spends": 1, "console": ["Create Proving Key: 8521.28 ms", "Proving with 1 spends: 10250.48 ms"]},
+    {"threads": 4, "spends": 1, "console": ["Create Proving Key: 11163.14 ms", "Proving with 1 spends: 7578.46 ms"]},
+    {"threads": 1, "spends": 1, "console": ["Create Proving Key: 14522.34 ms", "Proving with 1 spends: 21233.59 ms"]}
+  ],
+  "published_in_their_repo_results_proving_csv": {"spends_1_ms": 5446.1, "spends_5_ms": 12184.32, "spends_10_ms": 23650.72, "spends_20_ms": 122305.76}
+}
