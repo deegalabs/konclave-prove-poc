@@ -2,8 +2,8 @@
 import init, { Poc } from './pkg/konclave_prove_poc.js';
 
 self.onmessage = async (ev) => {
-  const { pool, runs, verify } = ev.data;
-  const out = { pool, runs: [], error: null };
+  const { pool, runs, verify, outputs = 1 } = ev.data;
+  const out = { pool, outputs, runs: [], error: null };
   try {
     const t0 = performance.now();
     const resp = await fetch('./pkg/konclave_prove_poc_bg.wasm');
@@ -19,7 +19,7 @@ self.onmessage = async (ev) => {
     self.postMessage({ progress: `key built in ${out.keyBuildMs} ms` });
     for (let i = 0; i < runs; i++) {
       const a0 = performance.now();
-      const actions = poc.prepare();
+      const actions = poc.prepare_n(outputs);
       const prepareMs = Math.round(performance.now() - a0);
       const p0 = performance.now();
       poc.prove();

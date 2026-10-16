@@ -77,9 +77,15 @@ impl Poc {
         self.pk = Some(ProvingKey::build(self.circuit));
     }
 
-    /// Builds the unproven 2-action bundle. Returns the number of actions.
+    /// Builds the unproven 2-action bundle (one output, padded to 2 actions). Returns the number of actions.
     pub fn prepare(&mut self) -> Result<u32, JsError> {
-        let bundle = self.build_bundle().map_err(|e| JsError::new(&e))?;
+        self.prepare_n(1)
+    }
+
+    /// Builds an unproven bundle with `outputs` zero-value outputs to the test address. The builder pads
+    /// to at least 2 actions, so the action count is max(2, outputs). Returns the number of actions.
+    pub fn prepare_n(&mut self, outputs: u32) -> Result<u32, JsError> {
+        let bundle = self.build_bundle(outputs).map_err(|e| JsError::new(&e))?;
         let n = bundle.actions().len() as u32;
         self.unproven = Some(bundle);
         Ok(n)
@@ -119,15 +125,20 @@ impl Poc {
 }
 
 impl Poc {
-    fn build_bundle(&self) -> Result<Unproven, String> {
+    fn build_bundle(&self, outputs: u32) -> Result<Unproven, String> {
+        if outputs == 0 || outputs > 64 {
+            return Err(format!("outputs must be 1 to 64, got {outputs}"));
+        }
         let sk = Option::<SpendingKey>::from(SpendingKey::from_bytes(KEY_SEED)).ok_or("bad seed")?;
         let fvk = FullViewingKey::from(&sk);
         let addr = fvk.address_at(0u32, Scope::External);
         let flags = self.bundle_version.default_flags();
         let mut b = Builder::new(BundleType::DEFAULT, self.bundle_version, flags, Anchor::empty_tree())
             .map_err(|e| format!("{e:?}"))?;
-        b.add_change_output(fvk, None, addr, NoteValue::from_raw(0), [0u8; 512])
-            .map_err(|e| format!("{e:?}"))?;
+        for _ in 0..outputs {
+            b.add_change_output(fvk.clone(), None, addr, NoteValue::from_raw(0), [0u8; 512])
+                .map_err(|e| format!("{e:?}"))?;
+        }
         let mut rng = StdRng::seed_from_u64(RNG_SEED);
         let built = b.build::<i64>(&mut rng).map_err(|e| format!("{e:?}"))?;
         built.map(|(bundle, _)| bundle).ok_or_else(|| "empty bundle".to_string())
@@ -148,5 +159,26 @@ mod tests {
             p.prove().map_err(|_| "prove failed").unwrap();
             p.verify().map_err(|_| "verify failed").unwrap();
         }
+    }
+
+    #[test]
+    fn n_outputs_give_n_actions_and_verify() {
+        for pool in ["orchard-v2", "ironwood-v3"] {
+            let mut p = Poc::new(pool).map_err(|_| ()).unwrap();
+            p.build_key();
+            for (outputs, expected) in [(1u32, 2u32), (2, 2), (4, 4), (8, 8)] {
+                let actions = p.prepare_n(outputs).map_err(|_| "prepare failed").unwrap();
+                assert_eq!(actions, expected, "{pool} outputs={outputs}");
+                p.prove().map_err(|_| "prove failed").unwrap();
+                p.verify().map_err(|_| "verify failed").unwrap();
+            }
+        }
+    }
+
+    #[test]
+    fn zero_or_too_many_outputs_are_refused() {
+        let mut p = Poc::new("ironwood-v3").map_err(|_| ()).unwrap();
+        assert!(p.build_bundle(0).is_err());
+        assert!(p.build_bundle(65).is_err());
     }
 }
