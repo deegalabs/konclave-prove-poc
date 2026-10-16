@@ -1,0 +1,20 @@
+{
+  "note": "Galaxy A14 (4 GB), Android 15 per the Firefox UA, Firefox 158, USB attached. 2026-10-15 22:35 local. Served by the old server, meta.commit cc902c7 is the worktree commit; source identical to this repo's initial commit. Earlier A14 run on Chrome 146: median 278.8 s, see 2026-10-15-a14-chrome146.json.",
+  "runs": [
+    {
+      "pool": "ironwood-v3", "browser": "Firefox 158",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 702, "proveMs": 127985, "verifyMs": 90745, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 510, "proveMs": 132329, "verifyMs": 1217, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 511, "proveMs": 134032, "verifyMs": 1210, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 505, "proveMs": 135033, "verifyMs": 1204, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 505, "proveMs": 130935, "verifyMs": 1202, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 235, "keyBuildMs": 111249,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 132329, "at": "2026-10-16T01:35:53.600Z"
+    }
+  ]
+}

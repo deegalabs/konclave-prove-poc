@@ -1,0 +1,50 @@
+{
+  "note": "Second session on the same S24 Ultra (12 GB), Android 16 per the Firefox UA, USB attached, 19:03 to 19:41 local. Served by the OLD server still pointing at the worktree, so meta.commit cc902c7 is the worktree commit, not the new repo's. Orchard ran first on a cool phone. Chrome run 2 is a 192 s outlier, cause unknown.",
+  "runs": [
+    {
+      "pool": "orchard-v2", "browser": "Firefox 157",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 97, "proveMs": 17444, "verifyMs": 12116, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 69, "proveMs": 17800, "verifyMs": 153, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 69, "proveMs": 17361, "verifyMs": 154, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 69, "proveMs": 17352, "verifyMs": 153, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 69, "proveMs": 17345, "verifyMs": 154, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 209, "keyBuildMs": 15614,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105709568,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:157.0) Gecko/157.0 Firefox/157.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 17361, "at": "2026-10-15T22:03:07.947Z"
+    },
+    {
+      "pool": "ironwood-v3", "browser": "Firefox 157",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 101, "proveMs": 17475, "verifyMs": 12379, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 71, "proveMs": 17393, "verifyMs": 154, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 72, "proveMs": 22891, "verifyMs": 212, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 88, "proveMs": 25936, "verifyMs": 211, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 89, "proveMs": 25843, "verifyMs": 211, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 55, "keyBuildMs": 15612,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:157.0) Gecko/157.0 Firefox/157.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 22891, "at": "2026-10-15T22:08:56.568Z"
+    },
+    {
+      "pool": "ironwood-v3", "browser": "Chrome 155",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 101, "proveMs": 27636, "verifyMs": 19385, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 88, "proveMs": 192476, "verifyMs": 198, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 75, "proveMs": 24010, "verifyMs": 183, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 62, "proveMs": 26424, "verifyMs": 184, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 61, "proveMs": 24653, "verifyMs": 183, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 48, "keyBuildMs": 17081,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36", "hardwareConcurrency": 8, "deviceMemoryGB": 8, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 26424, "at": "2026-10-15T22:41:24.033Z"
+    }
+  ]
+}

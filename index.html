@@ -4,12 +4,14 @@
 <title>Konclave proving PoC</title>
 <style>body{font:16px system-ui;margin:1rem;max-width:42rem}button{font:inherit;padding:.6rem 1rem;margin:.2rem}pre{white-space:pre-wrap;word-break:break-all;background:#eee;padding:.5rem}</style>
 <h1>Proving PoC</h1>
-<p>One 2-action proof of the orchard 0.15.5 Action circuit, WebAssembly, single thread, synthetic data. No vault, no network, nothing leaves this page.</p>
+<p>One 2-action proof of the orchard 0.15.5 Action circuit, WebAssembly, single thread, synthetic data. No vault, no network after load, no analytics, nothing leaves this page.</p>
+<p>Expect from ~40 s on a recent phone to 5+ minutes on a low-end one, and a warm device. First the proving key is built (once per page load), then each run. Stop kills the worker.</p>
 <label>Runs <input id="runs" type="number" value="5" min="1" max="10" style="width:4rem"></label>
 <label><input id="verify" type="checkbox" checked> verify after proving</label>
 <div>
   <button data-pool="orchard-v2">Prove Orchard (NU6.2 circuit)</button>
   <button data-pool="ironwood-v3">Prove Ironwood (NU6.3 circuit)</button>
+  <button id="stop" disabled>Stop</button>
 </div>
 <p id="status">idle</p>
 <pre id="out"></pre>
@@ -17,13 +19,24 @@
 <script type="module">
 const meta = await fetch('./pkg/meta.json').then(r => r.json()).catch(() => ({}));
 const out = document.getElementById('out'), status = document.getElementById('status');
-const setDisabled = (v) => { for (const x of document.querySelectorAll('button')) x.disabled = v; };
+const stopBtn = document.getElementById('stop');
+let current = null;
+const setDisabled = (v) => {
+  for (const x of document.querySelectorAll('button')) if (x !== stopBtn) x.disabled = v;
+  stopBtn.disabled = !v;
+};
+stopBtn.onclick = () => {
+  if (current) { current.terminate(); current = null; }
+  status.textContent = 'stopped';
+  setDisabled(false);
+};
 let last = null;
 for (const b of document.querySelectorAll('button[data-pool]')) {
   b.onclick = () => {
     setDisabled(true);
     status.textContent = 'running...';
     const w = new Worker('./worker.js', { type: 'module' });
+    current = w;
     w.onmessage = (ev) => {
       if (ev.data.progress) { status.textContent = ev.data.progress; return; }
       const r = ev.data.done;

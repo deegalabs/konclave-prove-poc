@@ -1,0 +1,35 @@
+{
+  "note": "Second session on the Galaxy A72 (6 GB), USB attached, 19:48 to 19:57 local. Served by the old server, so meta.commit cc902c7 is the worktree commit; the source files are byte-identical to this repo's initial commit (lib.rs, index.html, worker.js, node-run.mjs, Cargo.lock). Chrome reports deviceMemory 4 (capped bucket). The Firefox UA carries the real Android version: 14.",
+  "runs": [
+    {
+      "pool": "ironwood-v3", "browser": "Chrome 155",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 265, "proveMs": 50005, "verifyMs": 27894, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 130, "proveMs": 49706, "verifyMs": 363, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 132, "proveMs": 49382, "verifyMs": 362, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 131, "proveMs": 49381, "verifyMs": 363, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 130, "proveMs": 49393, "verifyMs": 362, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 133, "keyBuildMs": 37647,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36", "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 49393, "at": "2026-10-15T22:48:13.107Z"
+    },
+    {
+      "pool": "ironwood-v3", "browser": "Firefox 157",
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 166, "proveMs": 48806, "verifyMs": 27139, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 126, "proveMs": 48997, "verifyMs": 372, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 126, "proveMs": 48866, "verifyMs": 371, "actions": 2, "verified": true},
+        {"run": 4, "kind": "warm", "prepareMs": 125, "proveMs": 48852, "verifyMs": 369, "actions": 2, "verified": true},
+        {"run": 5, "kind": "warm", "prepareMs": 124, "proveMs": 48869, "verifyMs": 368, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2481726, "wasmLoadMs": 1525, "keyBuildMs": 33256,
+      "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "meta": {"commit": "cc902c7", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-15T20:16:07Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:157.0) Gecko/157.0 Firefox/157.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 48866, "at": "2026-10-15T22:57:40.091Z"
+    }
+  ]
+}
