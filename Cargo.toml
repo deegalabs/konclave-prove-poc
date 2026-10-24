@@ -16,6 +16,9 @@ orchard = { version = "0.15.5", default-features = false, features = ["circuit"]
 rand = { version = "0.8", default-features = false, features = ["std", "std_rng"] }
 getrandom = { version = "0.2", features = ["js"] }
 wasm-bindgen = "0.2"
+# Scanning measurement: the trial-decryption hot loop and the commitment-tree append, single thread.
+zcash_note_encryption = "0.4.2"
+incrementalmerkletree = "0.8.1"
 
 [profile.release]
 opt-level = 3

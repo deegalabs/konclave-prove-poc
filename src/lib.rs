@@ -16,6 +16,8 @@ use orchard::{
 use rand::{rngs::StdRng, SeedableRng};
 use wasm_bindgen::prelude::*;
 
+pub mod scan;
+
 /// Fixed seeds so every run proves the same statement shape.
 const KEY_SEED: [u8; 32] = [7u8; 32];
 const RNG_SEED: u64 = 0x4b6f_6e63_6c61_7665; // "Konclave"

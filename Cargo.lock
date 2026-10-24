@@ -540,9 +540,11 @@ name = "konclave-prove-poc"
 version = "0.0.0"
 dependencies = [
  "getrandom",
+ "incrementalmerkletree",
  "orchard",
  "rand",
  "wasm-bindgen",
+ "zcash_note_encryption",
 ]
 
 [[package]]
