@@ -92,6 +92,71 @@ export class Poc {
     }
 }
 if (Symbol.dispose) Poc.prototype[Symbol.dispose] = Poc.prototype.free;
+
+/**
+ * One scanning corpus loaded from a fixture file.
+ */
+export class Scan {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        ScanFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_scan_free(ptr, 0);
+    }
+    /**
+     * @returns {number}
+     */
+    actions() {
+        const ret = wasm.scan_actions(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * Appends every action's note commitment to an empty Orchard-depth frontier. Returns the number appended.
+     * @returns {number}
+     */
+    append() {
+        const ret = wasm.scan_append(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * Trial-decrypts every action. Returns how many decrypted for our key (must equal `expected_ours`).
+     * @returns {number}
+     */
+    decrypt() {
+        const ret = wasm.scan_decrypt(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * @returns {number}
+     */
+    expected_ours() {
+        const ret = wasm.scan_expected_ours(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * `pool` is "orchard-v2" or "ironwood-v3". `fixture` is the file bytes. Errors if the fixture is malformed.
+     * @param {string} pool
+     * @param {Uint8Array} fixture
+     */
+    constructor(pool, fixture) {
+        const ptr0 = passStringToWasm0(pool, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passArray8ToWasm0(fixture, wasm.__wbindgen_malloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ret = wasm.scan_new(ptr0, len0, ptr1, len1);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        this.__wbg_ptr = ret[0];
+        ScanFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+}
+if (Symbol.dispose) Scan.prototype[Symbol.dispose] = Scan.prototype.free;
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
@@ -121,6 +186,9 @@ function __wbg_get_imports() {
 const PocFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_poc_free(ptr, 1));
+const ScanFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_scan_free(ptr, 1));
 
 function getStringFromWasm0(ptr, len) {
     return decodeText(ptr >>> 0, len);
@@ -132,6 +200,13 @@ function getUint8ArrayMemory0() {
         cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
     }
     return cachedUint8ArrayMemory0;
+}
+
+function passArray8ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
+    getUint8ArrayMemory0().set(arg, ptr / 1);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
 }
 
 function passStringToWasm0(arg, malloc, realloc) {
