@@ -1,0 +1,83 @@
+{
+  "kind": "scan-decrypt-multi-worker",
+  "pool": "ironwood-v3",
+  "workers": 2,
+  "runs": [
+    {
+      "run": 1,
+      "kind": "cold",
+      "wallMs": 1510,
+      "perWorkerMs": [
+        1510,
+        1479
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 2,
+      "kind": "warm",
+      "wallMs": 1480,
+      "perWorkerMs": [
+        1480,
+        1454
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 3,
+      "kind": "warm",
+      "wallMs": 1502,
+      "perWorkerMs": [
+        1502,
+        1483
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 4,
+      "kind": "warm",
+      "wallMs": 1473,
+      "perWorkerMs": [
+        1473,
+        1472
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 5,
+      "kind": "warm",
+      "wallMs": 1489,
+      "perWorkerMs": [
+        1488,
+        1456
+      ],
+      "ours": 100,
+      "ok": true
+    }
+  ],
+  "error": null,
+  "actions": 10000,
+  "expectedOurs": 100,
+  "workersStarted": 2,
+  "meta": {
+    "commit": "ad147d6",
+    "crates": {
+      "orchard": "0.15.5"
+    },
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "built": "2026-10-24T20:25:54Z"
+  },
+  "device": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "hardwareConcurrency": 16,
+    "deviceMemoryGB": 16,
+    "secureContext": true,
+    "crossOriginIsolated": false
+  },
+  "medianWallMs": 1489,
+  "at": "2026-10-24T20:27:44.839Z"
+}

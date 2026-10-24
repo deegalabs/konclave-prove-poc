@@ -1,0 +1,153 @@
+{
+  "kind": "scan-decrypt-multi-worker",
+  "pool": "ironwood-v3",
+  "workers": 16,
+  "runs": [
+    {
+      "run": 1,
+      "kind": "cold",
+      "wallMs": 401,
+      "perWorkerMs": [
+        393,
+        372,
+        393,
+        350,
+        392,
+        353,
+        370,
+        395,
+        398,
+        370,
+        351,
+        378,
+        373,
+        381,
+        333,
+        377
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 2,
+      "kind": "warm",
+      "wallMs": 418,
+      "perWorkerMs": [
+        354,
+        418,
+        370,
+        357,
+        358,
+        320,
+        339,
+        344,
+        359,
+        363,
+        304,
+        344,
+        376,
+        411,
+        390,
+        359
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 3,
+      "kind": "warm",
+      "wallMs": 401,
+      "perWorkerMs": [
+        337,
+        324,
+        335,
+        329,
+        325,
+        343,
+        339,
+        353,
+        353,
+        338,
+        314,
+        325,
+        370,
+        339,
+        314,
+        396
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 4,
+      "kind": "warm",
+      "wallMs": 370,
+      "perWorkerMs": [
+        345,
+        321,
+        347,
+        339,
+        328,
+        340,
+        342,
+        351,
+        370,
+        336,
+        348,
+        327,
+        330,
+        366,
+        337,
+        337
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 5,
+      "kind": "warm",
+      "wallMs": 381,
+      "perWorkerMs": [
+        348,
+        330,
+        356,
+        350,
+        356,
+        352,
+        329,
+        353,
+        380,
+        344,
+        315,
+        333,
+        340,
+        356,
+        326,
+        374
+      ],
+      "ours": 100,
+      "ok": true
+    }
+  ],
+  "error": null,
+  "actions": 10000,
+  "expectedOurs": 100,
+  "workersStarted": 16,
+  "meta": {
+    "commit": "ad147d6",
+    "crates": {
+      "orchard": "0.15.5"
+    },
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "built": "2026-10-24T20:25:54Z"
+  },
+  "device": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "hardwareConcurrency": 16,
+    "deviceMemoryGB": 16,
+    "secureContext": true,
+    "crossOriginIsolated": false
+  },
+  "medianWallMs": 401,
+  "at": "2026-10-24T20:27:55.458Z"
+}

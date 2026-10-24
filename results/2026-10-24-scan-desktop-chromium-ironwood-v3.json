@@ -1,0 +1,83 @@
+{
+  "kind": "scan-trial-decryption-plus-tree-append",
+  "pool": "ironwood-v3",
+  "runs": [
+    {
+      "run": 1,
+      "kind": "cold",
+      "decryptMs": 2832,
+      "appendMs": 5238,
+      "totalMs": 8070,
+      "ours": 100,
+      "appended": 10000,
+      "ok": true
+    },
+    {
+      "run": 2,
+      "kind": "warm",
+      "decryptMs": 2792,
+      "appendMs": 5236,
+      "totalMs": 8028,
+      "ours": 100,
+      "appended": 10000,
+      "ok": true
+    },
+    {
+      "run": 3,
+      "kind": "warm",
+      "decryptMs": 2815,
+      "appendMs": 5295,
+      "totalMs": 8110,
+      "ours": 100,
+      "appended": 10000,
+      "ok": true
+    },
+    {
+      "run": 4,
+      "kind": "warm",
+      "decryptMs": 2791,
+      "appendMs": 5250,
+      "totalMs": 8041,
+      "ours": 100,
+      "appended": 10000,
+      "ok": true
+    },
+    {
+      "run": 5,
+      "kind": "warm",
+      "decryptMs": 2830,
+      "appendMs": 5418,
+      "totalMs": 8248,
+      "ours": 100,
+      "appended": 10000,
+      "ok": true
+    }
+  ],
+  "error": null,
+  "wasmBytes": 2518959,
+  "wasmLoadMs": 25,
+  "fixtureBytes": 1480016,
+  "fixtureFetchMs": 13,
+  "parseMs": 19,
+  "actions": 10000,
+  "expectedOurs": 100,
+  "wasmMemoryPeakBytes": 27328512,
+  "meta": {
+    "commit": "ad147d6",
+    "crates": {
+      "orchard": "0.15.5"
+    },
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "built": "2026-10-24T20:25:54Z"
+  },
+  "device": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "hardwareConcurrency": 16,
+    "deviceMemoryGB": 16,
+    "secureContext": true,
+    "crossOriginIsolated": false
+  },
+  "medianDecryptMs": 2815,
+  "medianAppendMs": 5250,
+  "at": "2026-10-24T20:27:24.185Z"
+}

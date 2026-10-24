@@ -1,0 +1,113 @@
+{
+  "kind": "scan-decrypt-multi-worker",
+  "pool": "ironwood-v3",
+  "workers": 8,
+  "runs": [
+    {
+      "run": 1,
+      "kind": "cold",
+      "wallMs": 489,
+      "perWorkerMs": [
+        419,
+        488,
+        415,
+        446,
+        456,
+        396,
+        456,
+        455
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 2,
+      "kind": "warm",
+      "wallMs": 462,
+      "perWorkerMs": [
+        416,
+        446,
+        435,
+        462,
+        456,
+        380,
+        451,
+        433
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 3,
+      "kind": "warm",
+      "wallMs": 473,
+      "perWorkerMs": [
+        443,
+        447,
+        415,
+        452,
+        443,
+        412,
+        473,
+        399
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 4,
+      "kind": "warm",
+      "wallMs": 444,
+      "perWorkerMs": [
+        443,
+        435,
+        430,
+        438,
+        406,
+        409,
+        434,
+        422
+      ],
+      "ours": 100,
+      "ok": true
+    },
+    {
+      "run": 5,
+      "kind": "warm",
+      "wallMs": 472,
+      "perWorkerMs": [
+        452,
+        430,
+        385,
+        451,
+        424,
+        404,
+        472,
+        434
+      ],
+      "ours": 100,
+      "ok": true
+    }
+  ],
+  "error": null,
+  "actions": 10000,
+  "expectedOurs": 100,
+  "workersStarted": 8,
+  "meta": {
+    "commit": "ad147d6",
+    "crates": {
+      "orchard": "0.15.5"
+    },
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "built": "2026-10-24T20:25:54Z"
+  },
+  "device": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "hardwareConcurrency": 16,
+    "deviceMemoryGB": 16,
+    "secureContext": true,
+    "crossOriginIsolated": false
+  },
+  "medianWallMs": 472,
+  "at": "2026-10-24T20:27:52.540Z"
+}
