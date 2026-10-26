@@ -39,6 +39,24 @@ commit of this repository. The source files (`src/lib.rs`, `index.html`, `worker
 byte-identical to the ones in this repository's first commit; only `Cargo.toml` differs, in its description, licence and
 a workspace line. The JSON was left as the page printed it.
 
+## Payroll scaling and a scanning measurement (preliminary)
+
+Two further measurements in the same page, both on synthetic data. Phone numbers for both are pending; the desktop
+numbers below are only a reference for what to expect.
+
+- **Payroll scaling.** The Outputs field proves a bundle with N outputs (actions = max(2, N)), single thread. Desktop
+  (Node, Ironwood, 3 runs each, `results/2026-10-16-scaling-desktop-node-outputs*.json`): 2 actions 18.9 s, 4 actions
+  37.4 s, 8 actions 69.7 s, 16 actions 129.4 s; wasm memory 101 MB to 396 MB.
+- **Trial decryption plus commitment-tree append, single thread, synthetic compact actions.** This is not a sync time and
+  not WebZjs: no download, no database, no witnesses, no real chain density. The corpus is 10,000 compact actions per pool
+  (`fixtures/`, written by `examples/gen_fixture.rs`, 1% decrypt for the test key). It uses orchard 0.15.5's batch
+  trial decryption and an Orchard-depth frontier append. Desktop (headless Chromium 151, 16 logical cores, 5 runs):
+  decrypt 2.8 s and append 5.3 s per 10,000 actions, Orchard and Ironwood alike.
+- **Comparison without wasm threads.** The decryption can be split over K Web Workers that each hold a slice and their own
+  wasm instance (message passing only). Desktop wall time for the same 10,000 actions: K=1 2.82 s, K=2 1.49 s, K=4 0.76 s,
+  K=8 0.47 s, K=16 0.40 s. The tree append is sequential and is not split. These are Web Workers, not wasm threads (shared
+  memory with rayon); a threaded wasm build was not made. Neither path needs COOP/COEP headers.
+
 ## What this does not show
 
 - Three phones are not "Android". The spread between the fastest and slowest median is more than 10x (17 s to 279 s).
@@ -46,14 +64,18 @@ a workspace line. The JSON was left as the page printed it.
   1%). The two A14 rows come from different browsers and versions on different days, so this is not a ranking of browsers.
 - Runs on one phone drift: the S24 went from 17 s to 26 s within five runs and had one 192 s run in Chrome. No temperature
   was recorded, so "the phone heats up" is a guess, not a finding.
-- Two actions only. ChainSafe's own `results/proving.csv` grows steeply with the number of spends (20 spends: 122 s).
-  A payroll with many payees was not measured.
+- The phone results above are two actions only. ChainSafe's own `results/proving.csv` grows steeply with the number of
+  spends (20 spends: 122 s). Larger bundles are measured on the desktop only, so far.
 - Synthetic bundle, no PCZT envelope, no real note witnesses.
-- No scanning, no battery, no thermal curve over minutes (the S24 Chrome run 3 at 76.7 s and the A14 run 3 at 558.8 s
+- No real scan: only the synthetic decryption and append above, no download, no database, no witnesses. No battery, no thermal curve over minutes (the S24 Chrome run 3 at 76.7 s and the A14 run 3 at 558.8 s
   are unexplained outliers, no temperature was recorded), no iOS, no background tab.
 - The medians include the first (cold) run. It was the fastest or among the fastest in most sessions, but not in all.
 
 ## Run it
+
+The page is static and single threaded, so it needs no special headers: it works as is on GitHub Pages
+(https://deegalabs.github.io/konclave-prove-poc/). Threaded wasm would need cross-origin isolation (COOP/COEP headers or a
+service worker that adds them); this harness does not build or use it.
 
 ```
 ./build.sh                          # needs rustup (stable, wasm32-unknown-unknown) and wasm-pack
