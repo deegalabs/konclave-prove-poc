@@ -1,0 +1,29 @@
+{
+  "note": "Raw output pasted by Daniel, 2026-10-27, run on the Galaxy A72 (6 GB), Chrome 155, USB attached (adb reverse, localhost), page served from the public folder at meta.commit ad147d6. Device identity confirmed by Daniel; the page of that day had no device-label field. The JSON below is the page's own output, unedited.",
+  "result": {
+    "kind": "scan-trial-decryption-plus-tree-append",
+    "pool": "ironwood-v3",
+    "runs": [
+      {"run": 1, "kind": "cold", "decryptMs": 6388, "appendMs": 15342, "totalMs": 21730, "ours": 100, "appended": 10000, "ok": true},
+      {"run": 2, "kind": "warm", "decryptMs": 6064, "appendMs": 12704, "totalMs": 18768, "ours": 100, "appended": 10000, "ok": true},
+      {"run": 3, "kind": "warm", "decryptMs": 6043, "appendMs": 13133, "totalMs": 19176, "ours": 100, "appended": 10000, "ok": true}
+    ],
+    "error": null,
+    "wasmBytes": 2518959,
+    "wasmLoadMs": 136,
+    "fixtureBytes": 1480016,
+    "fixtureFetchMs": 70,
+    "parseMs": 69,
+    "actions": 10000,
+    "expectedOurs": 100,
+    "wasmMemoryPeakBytes": 27328512,
+    "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+    "device": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false
+    },
+    "medianDecryptMs": 6064,
+    "medianAppendMs": 13133,
+    "at": "2026-10-27T04:04:21.566Z"
+  }
+}

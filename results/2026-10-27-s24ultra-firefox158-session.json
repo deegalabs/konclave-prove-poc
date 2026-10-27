@@ -1,0 +1,81 @@
+{
+  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy S24 Ultra (12 GB, Android 16 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in three; the parts were joined at the break lines and nothing else was edited. Order in the session: scan (one thread), K = 4, K = 8, a 2-action proof, a second 2-action proof, then the Orchard scan last (on a phone warmed by the proofs).",
+  "results": [
+    {
+      "kind": "scan-trial-decryption-plus-tree-append", "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "decryptMs": 2306, "appendMs": 3770, "totalMs": 6076, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 2, "kind": "warm", "decryptMs": 1931, "appendMs": 3631, "totalMs": 5562, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 3, "kind": "warm", "decryptMs": 1940, "appendMs": 3650, "totalMs": 5590, "ours": 100, "appended": 10000, "ok": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 132, "fixtureBytes": 1480016, "fixtureFetchMs": 54, "parseMs": 25,
+      "actions": 10000, "expectedOurs": 100, "wasmMemoryPeakBytes": 27328512, "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianDecryptMs": 1940, "medianAppendMs": 3650, "at": "2026-10-27T05:09:37.926Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker", "pool": "ironwood-v3", "workers": 4,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 908, "perWorkerMs": [908, 748, 874, 899], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 729, "perWorkerMs": [573, 696, 729, 716], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 715, "perWorkerMs": [564, 688, 710, 714], "ours": 100, "ok": true}
+      ],
+      "error": null, "actions": 10000, "expectedOurs": 100, "workersStarted": 4, "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 729, "at": "2026-10-27T05:09:52.799Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker", "pool": "ironwood-v3", "workers": 8,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 744, "perWorkerMs": [624, 588, 715, 630, 740, 567, 599, 570], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 559, "perWorkerMs": [515, 518, 490, 522, 559, 518, 516, 519], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 516, "perWorkerMs": [480, 465, 457, 510, 489, 476, 500, 460], "ours": 100, "ok": true}
+      ],
+      "error": null, "actions": 10000, "expectedOurs": 100, "workersStarted": 8, "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 559, "at": "2026-10-27T05:10:49.075Z"
+    },
+    {
+      "pool": "ironwood-v3", "outputs": 1,
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 75, "proveMs": 13302, "verifyMs": 9276, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 55, "proveMs": 13384, "verifyMs": 116, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 55, "proveMs": 13418, "verifyMs": 117, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 58, "keyBuildMs": 11526, "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 13384, "at": "2026-10-27T05:12:03.789Z"
+    },
+    {
+      "pool": "ironwood-v3", "outputs": 1,
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 76, "proveMs": 13693, "verifyMs": 10180, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 61, "proveMs": 15454, "verifyMs": 139, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 66, "proveMs": 16168, "verifyMs": 145, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 49, "keyBuildMs": 11669, "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 15454, "at": "2026-10-27T05:13:28.200Z"
+    },
+    {
+      "kind": "scan-trial-decryption-plus-tree-append", "pool": "orchard-v2",
+      "runs": [
+        {"run": 1, "kind": "cold", "decryptMs": 2667, "appendMs": 4223, "totalMs": 6890, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 2, "kind": "warm", "decryptMs": 2099, "appendMs": 4079, "totalMs": 6178, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 3, "kind": "warm", "decryptMs": 2299, "appendMs": 4438, "totalMs": 6737, "ours": 100, "appended": 10000, "ok": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 53, "fixtureBytes": 1480016, "fixtureFetchMs": 56, "parseMs": 21,
+      "actions": 10000, "expectedOurs": 100, "wasmMemoryPeakBytes": 27328512, "deviceLabel": "Galaxy S24 Ultra 12 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 16; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianDecryptMs": 2299, "medianAppendMs": 4223, "at": "2026-10-27T05:14:07.926Z"
+    }
+  ]
+}

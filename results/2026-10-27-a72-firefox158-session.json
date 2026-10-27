@@ -1,0 +1,87 @@
+{
+  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy A72 (6 GB, Android 14 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in two; the halves were joined at the 'crates' line and nothing else was edited. The device label is as typed (\"Galaxy A72 6gbp\"). The third result is a 2-action proof the page also ran; the fourth (K = 8) comes from a second paste of the same page session, which repeated the first three results unchanged.",
+  "results": [
+    {
+      "kind": "scan-trial-decryption-plus-tree-append",
+      "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "decryptMs": 6093, "appendMs": 12323, "totalMs": 18416, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 2, "kind": "warm", "decryptMs": 6081, "appendMs": 12247, "totalMs": 18328, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 3, "kind": "warm", "decryptMs": 6141, "appendMs": 12111, "totalMs": 18252, "ours": 100, "appended": 10000, "ok": true}
+      ],
+      "error": null,
+      "wasmBytes": 2518959,
+      "wasmLoadMs": 1933,
+      "fixtureBytes": 1480016,
+      "fixtureFetchMs": 66,
+      "parseMs": 48,
+      "actions": 10000,
+      "expectedOurs": 100,
+      "wasmMemoryPeakBytes": 27328512,
+      "deviceLabel": "Galaxy A72 6gbp",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianDecryptMs": 6093,
+      "medianAppendMs": 12247,
+      "at": "2026-10-27T04:20:55.376Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker",
+      "pool": "ironwood-v3",
+      "workers": 4,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 2705, "perWorkerMs": [1545, 2680, 2698, 1555], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 2889, "perWorkerMs": [1805, 2099, 2309, 2887], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 2702, "perWorkerMs": [2690, 1580, 2701, 1595], "ours": 100, "ok": true}
+      ],
+      "error": null,
+      "actions": 10000,
+      "expectedOurs": 100,
+      "workersStarted": 4,
+      "deviceLabel": "Galaxy A72 6gbp",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 2705,
+      "at": "2026-10-27T04:21:50.072Z"
+    },
+    {
+      "pool": "ironwood-v3",
+      "outputs": 1,
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 165, "proveMs": 48836, "verifyMs": 27328, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 128, "proveMs": 49047, "verifyMs": 372, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 125, "proveMs": 48905, "verifyMs": 374, "actions": 2, "verified": true}
+      ],
+      "error": null,
+      "wasmBytes": 2518959,
+      "wasmLoadMs": 1238,
+      "keyBuildMs": 33521,
+      "wasmMemoryAfterKeyBytes": 33751040,
+      "wasmMemoryPeakBytes": 105644032,
+      "deviceLabel": "Galaxy A72 6gbp",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 48905,
+      "at": "2026-10-27T04:25:25.167Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker",
+      "pool": "ironwood-v3",
+      "workers": 8,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 2286, "perWorkerMs": [1647, 2021, 1768, 1463, 949, 1924, 2275, 1996], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 2208, "perWorkerMs": [1971, 1356, 1806, 2141, 1873, 2206, 1264, 1701], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 2166, "perWorkerMs": [1377, 1813, 1501, 2164, 1864, 2054, 1845, 788], "ours": 100, "ok": true}
+      ],
+      "error": null,
+      "actions": 10000,
+      "expectedOurs": 100,
+      "workersStarted": 8,
+      "deviceLabel": "Galaxy A72 6gbp",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 2208,
+      "at": "2026-10-27T04:33:16.729Z"
+    }
+  ]
+}

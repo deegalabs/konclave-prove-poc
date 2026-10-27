@@ -1,107 +1,115 @@
 # konclave-prove-poc
 
-How long does one Orchard or Ironwood proof take in WebAssembly, single thread, on a phone browser? This is a small
-measurement harness, not a product. It was written to put a number on a claim we had only estimated.
+A measurement harness for one question: how long do the CPU-heavy parts of a shielded Zcash wallet take in WebAssembly, on one thread,
+in a phone browser? It measures three things on synthetic data, with the `orchard` crate (0.15.5):
 
-It proves one 2-action bundle with the real Halo2 Action circuit of the [`orchard`](https://crates.io/crates/orchard)
-crate (0.15.5), for the Orchard (NU6.2 circuit) or the Ironwood (NU6.3 circuit) pool, and verifies the proof.
-The bundle is synthetic: built with the orchard builder from fixed seeds, one zero-value output, padded to 2 actions.
-It uses no vault, no key of ours, no network.
+1. **Proving** one Halo2 Action-circuit proof (2 actions by default), Orchard or Ironwood circuit, verified after proving.
+2. **Trial decryption plus commitment-tree append** of 10,000 compact actions, one thread. This is not a sync time and not WebZjs:
+   no download, no database, no witnesses, no real chain density.
+3. **Decryption split over K Web Workers** (message passing, no shared memory, no COOP/COEP headers; not wasm threads).
 
-## Results (2026-10-15 and 16)
+The page runs in your own browser: https://deegalabs.github.io/konclave-prove-poc/ . It makes no network request after load, collects nothing,
+and uses no vault and no key of ours. Results are shown on the page and copied by you.
 
-2-action proof, WebAssembly, single thread, every proof verified, all 5 runs listed (the first is cold). Pool is Ironwood
-unless noted. Raw output for every row is in `results/`. "Session" separates runs of the same device on different days
-or after a break.
+## Results
 
-| Device | RAM | Browser | Android | Session | Key build | Prove, every run (s) | Median |
-|---|---|---|---|---|---|---|---|
-| Galaxy S24 Ultra | 12 GB | Firefox 157 | 16 | 1 | 15.6 s | 18.5, 25.9, 25.9, 25.9, 25.8 | 25.9 s |
-| Galaxy S24 Ultra | 12 GB | Firefox 157 | 16 | 2, Orchard | 15.6 s | 17.4, 17.8, 17.4, 17.4, 17.3 | 17.4 s |
-| Galaxy S24 Ultra | 12 GB | Firefox 157 | 16 | 2 | 15.6 s | 17.5, 17.4, 22.9, 25.9, 25.8 | 22.9 s |
-| Galaxy S24 Ultra | 12 GB | Chrome 155 | n/a | 1 | 17.1 s | 23.8, 35.1, 76.7, 25.5, 35.0 | 35.0 s |
-| Galaxy S24 Ultra | 12 GB | Chrome 155 | n/a | 2 | 17.1 s | 27.6, 192.5, 24.0, 26.4, 24.7 | 26.4 s |
-| Galaxy A72 | 6 GB | Chrome 155 | n/a | 1 | 33.6 s | 49.6, 49.7, 49.6, 49.5, 49.6 | 49.6 s |
-| Galaxy A72 | 6 GB | Chrome 155 | n/a | 1, Orchard | 33.5 s | 49.6, 49.7, 49.5, 49.4, 49.4 | 49.5 s |
-| Galaxy A72 | 6 GB | Chrome 155 | n/a | 2 | 37.6 s | 50.0, 49.7, 49.4, 49.4, 49.4 | 49.4 s |
-| Galaxy A72 | 6 GB | Firefox 157 | 14 | 2 | 33.3 s | 48.8, 49.0, 48.9, 48.9, 48.9 | 48.9 s |
-| Galaxy A14 | 4 GB | Chrome 146 | n/a | 1 | 137.0 s | 180.5, 183.3, 558.8, 290.8, 278.8 | 278.8 s |
-| Galaxy A14 | 4 GB | Firefox 158 | 15 | 1 | 111.2 s | 128.0, 132.3, 134.0, 135.0, 130.9 | 132.3 s |
-| Desktop (WSL2, 16 logical cores) | n/a | Chromium 151 headless | n/a | 1 | 15.2 s | 21.4, 21.7, 23.1, 20.7, 20.6 | 21.4 s |
+Ironwood pool, medians of the runs of each session, all proofs verified, all decryptions checked (exactly the 100 notes of the test key).
+Raw output for every row is in `results/`; `node scripts/summarize.mjs results` recomputes every median below from it.
 
-The key build happens once per page load, before the first proof. Orchard and Ironwood use circuits of the same size;
-on the A72 they differ by under 1%. On the S24, Orchard was faster only because it ran first on a cool phone. RAM figures
-are as stated by the device owner (the browser reports a capped bucket). Android is "n/a" where Chrome's frozen user
-agent says "10"; Firefox reports the real version. Phones were attached to USB (adb reverse) during every run.
+**Proving, 2 actions, one thread (seconds).** Medians per session, so a range means several sessions on the same phone.
 
-About the `commit` field in the raw JSON: it is the commit of the development branch the page was built from, not a
-commit of this repository. The source files (`src/lib.rs`, `index.html`, `worker.js`, `node-run.mjs`, `Cargo.lock`) are
-byte-identical to the ones in this repository's first commit; only `Cargo.toml` differs, in its description, licence and
-a workspace line. The JSON was left as the page printed it.
+| Device | Browser | Median(s) | Proving-key build |
+|---|---|---|---|
+| Galaxy S24 Ultra, 12 GB | Firefox 157/158 | 13.4, 15.5, 22.9, 25.9 | 11.5 to 15.6 s |
+| Galaxy S24 Ultra, 12 GB | Chrome 155 | 23.0, 26.4, 35.0 | 13.1 to 17.1 s |
+| Galaxy A72, 6 GB | Firefox 157/158 | 48.9, 48.9 | 33.3 to 33.5 s |
+| Galaxy A72, 6 GB | Chrome 155 | 49.4, 49.6 | 33.6 to 37.7 s |
+| Galaxy A14, 4 GB | Firefox 158 | 132.0, 132.3 | 111.3 to 111.7 s |
+| Galaxy A14, 4 GB | Chrome 146/155 | 268.4, 278.8 | 137.0 to 138.8 s |
+| Desktop (WSL2, 16 logical cores) | Chromium 151 headless | 21.4 | 15.2 s |
 
-## Payroll scaling and a scanning measurement (preliminary)
+The key is built once per page load, before the first proof. Orchard and Ironwood circuits are the same size and took the same time when run back to back on a cool phone.
 
-Two further measurements in the same page, both on synthetic data. Phone numbers for both are pending; the desktop
-numbers below are only a reference for what to expect.
+**Trial decryption plus tree append, one thread, 10,000 actions (seconds), session of 2026-10-27.**
 
-- **Payroll scaling.** The Outputs field proves a bundle with N outputs (actions = max(2, N)), single thread. Desktop
-  (Node, Ironwood, 3 runs each, `results/2026-10-16-scaling-desktop-node-outputs*.json`): 2 actions 18.9 s, 4 actions
-  37.4 s, 8 actions 69.7 s, 16 actions 129.4 s; wasm memory 101 MB to 396 MB.
-- **Trial decryption plus commitment-tree append, single thread, synthetic compact actions.** This is not a sync time and
-  not WebZjs: no download, no database, no witnesses, no real chain density. The corpus is 10,000 compact actions per pool
-  (`fixtures/`, written by `examples/gen_fixture.rs`, 1% decrypt for the test key). It uses orchard 0.15.5's batch
-  trial decryption and an Orchard-depth frontier append. Each decrypt call also builds the per-action domain and clones
-  the actions, as a scan does, which is a small cost next to the decryption. Desktop (headless Chromium 151, 16 logical cores, 5 runs):
-  decrypt 2.8 s and append 5.3 s per 10,000 actions, Orchard and Ironwood alike.
-- **Comparison without wasm threads.** The decryption can be split over K Web Workers that each hold a slice and their own
-  wasm instance (message passing only). Desktop wall time for the same 10,000 actions: K=1 2.82 s, K=2 1.49 s, K=4 0.76 s,
-  K=8 0.47 s, K=16 0.40 s. The tree append is sequential and is not split. These are Web Workers, not wasm threads (shared
-  memory with rayon); a threaded wasm build was not made. Neither path needs COOP/COEP headers.
+| Device | Browser | Decrypt | Append | Total | Per 1,000 actions |
+|---|---|---|---|---|---|
+| Galaxy S24 Ultra | Firefox 158 | 1.94 | 3.65 | 5.59 | 0.56 |
+| Galaxy S24 Ultra | Chrome 155 | 2.31 | 4.41 | 6.71 | 0.67 |
+| Galaxy A72 | Firefox 158 | 6.09 | 12.25 | 18.33 | 1.83 |
+| Galaxy A72 | Chrome 155 | 6.06 | 13.13 | 19.18 | 1.92 |
+| Galaxy A14 | Firefox 158 | 19.46 | 43.21 | 62.46 | 6.25 |
+| Galaxy A14 | Chrome 155 | 24.74 | 52.21 | 76.95 | 7.70 |
+| Desktop, headless | Chromium 151 | 2.81 | 5.25 | 8.07 | 0.81 |
+
+The tree append is 65% to 70% of the total on every device. It is sequential here. A real scanner multiplies the per-1,000-action figure by the
+number of actions in the range it scans; this harness does not know that number for any real chain.
+
+**Decryption over K workers: wall time and gain over one thread (the decryption median above).**
+
+| Device, browser | One thread | K = 4 | K = 8 |
+|---|---|---|---|
+| S24 Ultra, Firefox | 1.94 s | 0.73 s (2.7x) | 0.56 s (3.5x) |
+| S24 Ultra, Chrome | 2.31 s | 0.82 s (2.8x) | 0.57 s (4.0x) |
+| A72, Firefox | 6.09 s | 2.71 s (2.2x) | 2.21 s (2.8x) |
+| A72, Chrome | 6.06 s | 2.70 s (2.2x) | 2.90 s (2.1x) |
+| A14, Firefox | 19.46 s | 5.77 s (3.4x) | 4.14 s (4.7x) |
+| A14, Chrome | 24.74 s | 6.01 s (4.1x) | 3.19 s (7.8x) |
+| Desktop, 16 logical cores | 2.82 s | 0.76 s (3.7x) | 0.47 s (6.0x), 0.40 s at K = 16 (7.0x) |
+
+On the A72 the per-worker times fall into two groups (about 1.55 s and 2.69 s at K = 4), consistent with cores of different speed; the chip was not
+inspected. The A14 in Chrome scales almost linearly. On the A14 in Firefox the K = 8 run came after a 2-minute proof, on a warmer phone than the K = 4 run.
+
+**Proving cost against the number of actions** (desktop, Node 24, 3 runs each, `results/2026-10-16-scaling-desktop-node-outputs*.json`): 2 actions 18.9 s,
+4 actions 37.4 s, 8 actions 69.7 s, 16 actions 129.4 s; wasm memory 101 MB to 396 MB. Not measured on phones.
+
+**Cross-check against ChainSafe's benchmark** ([`ChainSafe/zcash-wasm-benchmark`](https://github.com/ChainSafe/zcash-wasm-benchmark) at `2c6d6db`, unchanged, built with
+its pinned `nightly-2024-02-26`, headless Chromium 151, same desktop, Orchard, 1 spend): 1 thread 21.2 s, 4 threads 7.6 s and 10.3 s. Our one-thread proof on the same
+machine: 21.4 s. Same order of magnitude, not the same code: theirs is orchard 0.8 and a 1-spend dummy transaction. Their results are printed to the console, so they
+were not collected on the phones. `chainsafe-run.mjs` is the Playwright driver used.
+
+## Method
+
+- One thread of wasm (`wasm32-unknown-unknown`, release, LTO), each task in a Web Worker so the page stays responsive. No `SharedArrayBuffer`.
+- Proving: a bundle built with the orchard builder (zero-value outputs to a fixed test key, empty-tree anchor), `create_proof` timed alone; `prepare` and
+  `verify` are timed separately. The proof is then signed with the test key and checked with `verify_proof`.
+- Scanning: 10,000 compact actions per pool, written by `examples/gen_fixture.rs` from fixed seeds (the file hashes are reproducible); 1 in 100 is for the test key.
+  `batch::try_compact_note_decryption` with one prepared incoming viewing key, then `Frontier::append` of every commitment. Each decrypt call also builds the per-action
+  domain and clones the actions. Download of the fixture and its parsing are timed and reported but not included.
+- Every run is listed; the first run of a session is marked cold. Medians are recomputed from the raw JSON by `scripts/summarize.mjs`.
+- Each result carries a device label typed on the page, the user agent, the harness commit (`meta.commit`) and the browser's own `hardwareConcurrency`.
+
+## Reproduce
+
+```
+./build.sh                          # rustup (stable, wasm32-unknown-unknown) and wasm-pack
+python3 -m http.server 8080         # in this folder
+cargo test --release                # native: proofs verify, decryption finds exactly the test key's notes, fixtures are refused when malformed
+cargo run --release --example gen_fixture   # regenerates fixtures/*.bin byte for byte
+node scripts/summarize.mjs results  # medians from the raw JSON
+```
+
+For a phone: `adb reverse tcp:8080 tcp:8080` over USB and open `http://localhost:8080`, or open the Pages link above. The page is static and single threaded, so it
+needs no special headers. Threaded wasm would need cross-origin isolation; this harness neither builds nor uses it.
 
 ## What this does not show
 
-- Three phones are not "Android". The spread between the fastest and slowest median is more than 10x (17 s to 279 s).
-- The browser mattered a lot on one phone (A14: 279 s on Chrome 146, 132 s on Firefox 158) and not on another (A72, within
-  1%). The two A14 rows come from different browsers and versions on different days, so this is not a ranking of browsers.
-- Runs on one phone drift: the S24 went from 17 s to 26 s within five runs and had one 192 s run in Chrome. No temperature
-  was recorded, so "the phone heats up" is a guess, not a finding.
-- The phone results above are two actions only. ChainSafe's own `results/proving.csv` grows steeply with the number of
-  spends (20 spends: 122 s). Larger bundles are measured on the desktop only, so far.
-- Synthetic bundle, no PCZT envelope, no real note witnesses.
-- No real scan: only the synthetic decryption and append above, no download, no database, no witnesses.
-- No battery, no thermal curve over minutes (the S24 Chrome run 3 at 76.7 s and the A14 run 3 at 558.8 s are unexplained
-  outliers, no temperature was recorded), no iOS, no background tab.
-- The medians include the first (cold) run. It was the fastest or among the fastest in most sessions, but not in all.
+- Three phones are not "Android". The same phone gave proving medians from 13.4 s to 25.9 s (Firefox) and 23.0 s to 35.0 s (Chrome) across sessions, with single runs
+  up to 76.7 s and 192.5 s in Chrome on the S24. No temperature was recorded, so heat is a guess, not a finding. On the A14 in Chrome one verify took 1,222 s, cause unknown.
+- Synthetic data: no PCZT envelope, no real note witnesses, no real chain density, no download, no database, no spend detection. Scanning is a proxy for the CPU work of a scan.
+- The tree append is a plain frontier append. Reading `shardtree` 0.8.0 shows its batch insertion also hashes adjacent ephemeral leaves eagerly, but it was not measured inside a wallet.
+- Web Workers are not wasm threads; the worker figures do not predict a `wasm-bindgen-rayon` build.
+- No battery, no thermal curve, no iOS, no background tab. Phones were attached to USB (adb reverse) during every cable run.
+- Browser and version differ between some rows (for example the A14 proving rows), so a pair of rows is not a ranking of browsers.
 
-## Run it
+## Provenance of the files in `results/`
 
-The page is static and single threaded, so it needs no special headers: it works as is on GitHub Pages
-(https://deegalabs.github.io/konclave-prove-poc/). Threaded wasm would need cross-origin isolation (COOP/COEP headers or a
-service worker that adds them); this harness does not build or use it.
-
-```
-./build.sh                          # needs rustup (stable, wasm32-unknown-unknown) and wasm-pack
-python3 -m http.server 8080         # in this folder
-```
-
-Open `http://localhost:8080`, choose the pool, 5 runs, verify ticked, "Copy JSON".
-For a phone, use `adb reverse tcp:8080 tcp:8080` over USB and open `http://localhost:8080` (localhost is a secure
-context; a LAN address is not). Native check: `cargo test --release`. Headless: `node node-run.mjs ironwood-v3 3`.
-
-## Cross-check against ChainSafe's benchmark
-
-[`ChainSafe/zcash-wasm-benchmark`](https://github.com/ChainSafe/zcash-wasm-benchmark) at commit `2c6d6db`, unchanged,
-built with its pinned `nightly-2024-02-26`, Chromium 151 on the same desktop, pool Orchard, 1 spend:
-
-| Threads | Create proving key | Proving, 1 spend |
-|---|---|---|
-| 4 | 8.5 s, 11.2 s | 10.3 s, 7.6 s |
-| 1 | 14.5 s | 21.2 s |
-
-Our single-thread desktop number (21.4 s) is the same order. Not the same code: theirs is orchard 0.8 and a 1-spend
-dummy transaction, ours orchard 0.15.5 and a 2-action bundle. `chainsafe-run.mjs` is the Playwright driver we used.
+- The `commit` field in the JSON of 2026-10-15 and 16 is the commit of the development branch the page was built from, not a commit of this repository. The source files of that
+  build are byte-identical to this repository's first commit (`src/lib.rs`, `index.html`, `worker.js`, `node-run.mjs`, `Cargo.lock`). Files of 2026-10-24 and later carry `ad147d6` or a later commit of this repository.
+- Files named `*-session.json` hold the page's "Copy all" output; where a chat split a paste, the parts were joined at the break and nothing else was edited (each file's `note` says so).
+- Files without a device label in the JSON take their device from the file name.
 
 ## Credits and licence
 
-The proving is done by the `orchard` crate and `halo2_proofs` from the Zcash ecosystem; the benchmark comparison is
-ChainSafe's work. This harness is dual licensed Apache-2.0 / MIT.
+Proving and note decryption are done by the `orchard` crate, `halo2_proofs`, `zcash_note_encryption` and `incrementalmerkletree` from the Zcash ecosystem; the benchmark comparison is ChainSafe's work.
+This harness is dual licensed Apache-2.0 / MIT.

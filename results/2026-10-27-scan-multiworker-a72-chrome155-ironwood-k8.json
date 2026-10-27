@@ -1,0 +1,24 @@
+{
+  "note": "Raw output pasted by Daniel, 2026-10-27, Galaxy A72 (6 GB), Chrome 155, USB attached (adb reverse, localhost), meta.commit ad147d6. Device identity confirmed by Daniel. Web Workers with message passing, not wasm threads. The JSON below is the page's own output, unedited.",
+  "result": {
+    "kind": "scan-decrypt-multi-worker",
+    "pool": "ironwood-v3",
+    "workers": 8,
+    "runs": [
+      {"run": 1, "kind": "cold", "wallMs": 2818, "perWorkerMs": [2124, 2110, 1902, 2412, 2648, 2785, 2813, 2160], "ours": 100, "ok": true},
+      {"run": 2, "kind": "warm", "wallMs": 3171, "perWorkerMs": [2358, 2784, 3084, 3108, 3112, 2857, 3136, 2838], "ours": 100, "ok": true},
+      {"run": 3, "kind": "warm", "wallMs": 2904, "perWorkerMs": [2447, 2367, 2422, 2828, 2902, 2300, 2664, 2780], "ours": 100, "ok": true}
+    ],
+    "error": null,
+    "actions": 10000,
+    "expectedOurs": 100,
+    "workersStarted": 8,
+    "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+    "device": {
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "hardwareConcurrency": 8, "deviceMemoryGB": 4, "secureContext": true, "crossOriginIsolated": false
+    },
+    "medianWallMs": 2904,
+    "at": "2026-10-27T04:12:35.869Z"
+  }
+}

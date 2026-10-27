@@ -1,0 +1,55 @@
+{
+  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy A14 (4 GB, Android 15 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. Order in the session: scan (one thread) at 19:01Z, K = 4 at 19:04Z, then after a break a 2-action proof at 19:55Z and K = 8 at 19:56Z (the K = 8 run therefore ran on a warm phone, the K = 4 run on a cooler one). Nothing edited.",
+  "results": [
+    {
+      "kind": "scan-trial-decryption-plus-tree-append", "pool": "ironwood-v3",
+      "runs": [
+        {"run": 1, "kind": "cold", "decryptMs": 22153, "appendMs": 43355, "totalMs": 65508, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 2, "kind": "warm", "decryptMs": 19459, "appendMs": 42810, "totalMs": 62269, "ours": 100, "appended": 10000, "ok": true},
+        {"run": 3, "kind": "warm", "decryptMs": 19250, "appendMs": 43213, "totalMs": 62463, "ours": 100, "appended": 10000, "ok": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 298, "fixtureBytes": 1480016, "fixtureFetchMs": 69, "parseMs": 109,
+      "actions": 10000, "expectedOurs": 100, "wasmMemoryPeakBytes": 27328512, "deviceLabel": "Galaxy A14 4 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianDecryptMs": 19459, "medianAppendMs": 43213, "at": "2026-10-27T19:01:49.679Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker", "pool": "ironwood-v3", "workers": 4,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 7007, "perWorkerMs": [7007, 6800, 6595, 6886], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 5673, "perWorkerMs": [5505, 5464, 5671, 5661], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 5773, "perWorkerMs": [5217, 5559, 5723, 5769], "ours": 100, "ok": true}
+      ],
+      "error": null, "actions": 10000, "expectedOurs": 100, "workersStarted": 4, "deviceLabel": "Galaxy A14 4 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 5773, "at": "2026-10-27T19:04:21.916Z"
+    },
+    {
+      "pool": "ironwood-v3", "outputs": 1,
+      "runs": [
+        {"run": 1, "kind": "cold", "prepareMs": 725, "proveMs": 127604, "verifyMs": 90758, "actions": 2, "verified": true},
+        {"run": 2, "kind": "warm", "prepareMs": 510, "proveMs": 131972, "verifyMs": 1209, "actions": 2, "verified": true},
+        {"run": 3, "kind": "warm", "prepareMs": 513, "proveMs": 133658, "verifyMs": 1208, "actions": 2, "verified": true}
+      ],
+      "error": null, "wasmBytes": 2518959, "wasmLoadMs": 154, "keyBuildMs": 111673, "wasmMemoryAfterKeyBytes": 33751040, "wasmMemoryPeakBytes": 105644032,
+      "deviceLabel": "Galaxy A14 4 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianProveMs": 131972, "at": "2026-10-27T19:55:36.316Z"
+    },
+    {
+      "kind": "scan-decrypt-multi-worker", "pool": "ironwood-v3", "workers": 8,
+      "runs": [
+        {"run": 1, "kind": "cold", "wallMs": 4695, "perWorkerMs": [4261, 4545, 4097, 4528, 4689, 4201, 4510, 4564], "ours": 100, "ok": true},
+        {"run": 2, "kind": "warm", "wallMs": 4137, "perWorkerMs": [3841, 3769, 3696, 4136, 4113, 3596, 3974, 3687], "ours": 100, "ok": true},
+        {"run": 3, "kind": "warm", "wallMs": 3912, "perWorkerMs": [3911, 3687, 3608, 3870, 3786, 3547, 3580, 3481], "ours": 100, "ok": true}
+      ],
+      "error": null, "actions": 10000, "expectedOurs": 100, "workersStarted": 8, "deviceLabel": "Galaxy A14 4 GB",
+      "meta": {"commit": "ad147d6", "crates": {"orchard": "0.15.5"}, "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)", "built": "2026-10-24T20:25:54Z"},
+      "device": {"userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0", "hardwareConcurrency": 8, "deviceMemoryGB": null, "secureContext": true, "crossOriginIsolated": false},
+      "medianWallMs": 4137, "at": "2026-10-27T19:56:02.629Z"
+    }
+  ]
+}
