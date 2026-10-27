@@ -210,17 +210,24 @@ for (const b of document.querySelectorAll('button[data-multi]')) {
     const pool = b.dataset.multi, K = +$('workers').value, runs = +$('runs').value;
     startRun('loading');
     const workers = [];
-    current = { terminate: () => workers.forEach(w => w.terminate()) };
+    let stopped = false;
+    const halt = () => workers.forEach(w => w.terminate());
+    // Stop sets the flag and kills what exists; every await below re-checks it, so a Stop during loading is honoured too.
+    current = { terminate: () => { stopped = true; halt(); } };
     const res = { kind: MULTI, pool, workers: K, runs: [], error: null };
     try {
       const fixture = new Uint8Array(await (await fetch(`./fixtures/compact-${pool}.bin`)).arrayBuffer());
+      if (stopped) { halt(); return; }
       const dv = new DataView(fixture.buffer);
       const count = dv.getUint32(8, true), expectedOurs = dv.getUint32(12, true);
       res.actions = count; res.expectedOurs = expectedOurs;
       const per = Math.ceil(count / K), ready = [];
+      let covered = 0;
       for (let i = 0; i < K; i++) {
+        if (stopped) { halt(); return; }
         const lo = i * per, hi = Math.min(count, lo + per);
         if (lo >= hi) break;
+        covered += hi - lo;
         const bytes = new Uint8Array(16 + (hi - lo) * 148);
         bytes.set([0x4b, 0x43, 0x50, 0x53]);
         const h = new DataView(bytes.buffer);
@@ -234,9 +241,12 @@ for (const b of document.querySelectorAll('button[data-multi]')) {
         }));
         w.postMessage({ type: 'init', pool, fixture: bytes });
       }
+      if (covered !== count) throw new Error(`slices cover ${covered} of ${count} actions`);
       await Promise.all(ready);
+      if (stopped) { halt(); return; }
       res.workersStarted = workers.length;
       for (let r = 0; r < runs; r++) {
+        if (stopped) { halt(); return; }
         statusEl.textContent = `run ${r + 1}/${runs} over ${workers.length} workers`;
         const t0 = performance.now();
         const parts = await Promise.all(workers.map(w => new Promise((ok, bad) => {
@@ -251,7 +261,8 @@ for (const b of document.querySelectorAll('button[data-multi]')) {
     } catch (e) {
       res.error = String(e && e.message ? e.message : e);
     }
-    workers.forEach(w => w.terminate());
+    halt();
+    if (stopped) return;
     current = null;
     finish(res, { medianWallMs: median(res.runs.map(x => x.wallMs)) });
     endRun(res.error ? 'error: ' + res.error : 'done');

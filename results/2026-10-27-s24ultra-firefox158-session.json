@@ -1,5 +1,5 @@
 {
-  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy S24 Ultra (12 GB, Android 16 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in three; the parts were joined at the break lines and nothing else was edited. Order in the session: scan (one thread), K = 4, K = 8, a 2-action proof, a second 2-action proof, then the Orchard scan last (on a phone warmed by the proofs).",
+  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy S24 Ultra (12 GB, Android 16 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in three; the parts were joined at the break lines (inside the perWorkerMs list of the K = 8 run 3, and between the totalMs and ours fields of the Orchard scan run 2) and nothing else was edited. Order in the session: scan (one thread), K = 4, K = 8, a 2-action proof, a second 2-action proof, then the Orchard scan last (on a phone warmed by the proofs).",
   "results": [
     {
       "kind": "scan-trial-decryption-plus-tree-append", "pool": "ironwood-v3",

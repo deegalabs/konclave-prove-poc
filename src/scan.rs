@@ -140,12 +140,16 @@ mod tests {
     fn decrypts_exactly_our_actions_for_each_pool() {
         for pool in ["orchard-v2", "ironwood-v3"] {
             let s = Scan::build(pool, &fixture(pool)).unwrap();
-            assert!(s.actions() > 0);
+            assert_eq!(s.actions(), 10_000, "{pool}");
+            // The header's count is read from the fixture; the literal 100 (1 in 100 actions) is pinned here too.
+            assert_eq!(s.expected_ours(), 100, "{pool}");
             assert_eq!(s.decrypt(), s.expected_ours(), "{pool}");
             assert_eq!(s.append(), s.actions(), "{pool}");
         }
     }
 
+    // `Scan::decrypt` returns only a count (it is the timed call), so this test repeats the same batch call to read
+    // the recipients; the count test above covers `decrypt` itself.
     #[test]
     fn every_decrypted_note_is_for_our_address() {
         let sk = Option::<SpendingKey>::from(SpendingKey::from_bytes(KEY_SEED)).unwrap();

@@ -28,9 +28,10 @@ Raw output for every row is in `results/`; `node scripts/summarize.mjs results` 
 | Galaxy A14, 4 GB | Chrome 146/155 | 268.4, 278.8 | 137.0 to 138.8 s |
 | Desktop (WSL2, 16 logical cores) | Chromium 151 headless | 21.4 | 15.2 s |
 
-The key is built once per page load, before the first proof. Orchard and Ironwood circuits are the same size and took the same time when run back to back on a cool phone.
+The key is built once per page load, before the first proof. The Orchard and Ironwood circuits are the same size; on the A72 (proving) and the S24 in Chrome (scan) they took the same
+time. Where they differ on one phone (S24 in Firefox, Orchard first on a cool phone), the order of the runs and the heat of the phone differ too, so it is not a circuit difference.
 
-**Trial decryption plus tree append, one thread, 10,000 actions (seconds), session of 2026-10-27.**
+**Trial decryption plus tree append, one thread, 10,000 actions (seconds), medians of 3 runs: phones from the sessions of 2026-10-27, desktop from 2026-10-24.**
 
 | Device | Browser | Decrypt | Append | Total | Per 1,000 actions |
 |---|---|---|---|---|---|
@@ -42,7 +43,8 @@ The key is built once per page load, before the first proof. Orchard and Ironwoo
 | Galaxy A14 | Chrome 155 | 24.74 | 52.21 | 76.95 | 7.70 |
 | Desktop, headless | Chromium 151 | 2.81 | 5.25 | 8.07 | 0.81 |
 
-The tree append is 65% to 70% of the total on every device. It is sequential here. A real scanner multiplies the per-1,000-action figure by the
+Total is the median of the per-run totals, so it can differ from decrypt plus append by a rounding (A14 in Firefox: 19.46 + 43.21 = 62.67, median total 62.46).
+The tree append is 65% to 70% of the total on every Ironwood row above (about 63% in the S24 Firefox Orchard run, taken on a warmer phone). It is sequential here. A real scanner multiplies the per-1,000-action figure by the
 number of actions in the range it scans; this harness does not know that number for any real chain.
 
 **Decryption over K workers: wall time and gain over one thread (the decryption median above).**
@@ -51,17 +53,17 @@ number of actions in the range it scans; this harness does not know that number 
 |---|---|---|---|
 | S24 Ultra, Firefox | 1.94 s | 0.73 s (2.7x) | 0.56 s (3.5x) |
 | S24 Ultra, Chrome | 2.31 s | 0.82 s (2.8x) | 0.57 s (4.0x) |
-| A72, Firefox | 6.09 s | 2.71 s (2.2x) | 2.21 s (2.8x) |
+| A72, Firefox | 6.09 s | 2.71 s (2.3x) | 2.21 s (2.8x) |
 | A72, Chrome | 6.06 s | 2.70 s (2.2x) | 2.90 s (2.1x) |
 | A14, Firefox | 19.46 s | 5.77 s (3.4x) | 4.14 s (4.7x) |
 | A14, Chrome | 24.74 s | 6.01 s (4.1x) | 3.19 s (7.8x) |
 | Desktop, 16 logical cores | 2.82 s | 0.76 s (3.7x) | 0.47 s (6.0x), 0.40 s at K = 16 (7.0x) |
 
-On the A72 the per-worker times fall into two groups (about 1.55 s and 2.69 s at K = 4), consistent with cores of different speed; the chip was not
-inspected. The A14 in Chrome scales almost linearly. On the A14 in Firefox the K = 8 run came after a 2-minute proof, on a warmer phone than the K = 4 run.
+On the A72 at K = 4 the per-worker times fall into two groups (about 1.55 s and 2.69 s) in Chrome in all three runs and in Firefox in runs 1 and 3, consistent with cores of different
+speed; the chip was not inspected. The A14 in Chrome scales almost linearly. On the A14 in Firefox the K = 8 run came after a 2-minute proof, on a warmer phone than the K = 4 run.
 
 **Proving cost against the number of actions** (desktop, Node 24, 3 runs each, `results/2026-10-16-scaling-desktop-node-outputs*.json`): 2 actions 18.9 s,
-4 actions 37.4 s, 8 actions 69.7 s, 16 actions 129.4 s; wasm memory 101 MB to 396 MB. Not measured on phones.
+4 actions 37.4 s, 8 actions 69.7 s, 16 actions 129.4 s; wasm memory 101 MiB to 396 MiB. Not measured on phones.
 
 **Cross-check against ChainSafe's benchmark** ([`ChainSafe/zcash-wasm-benchmark`](https://github.com/ChainSafe/zcash-wasm-benchmark) at `2c6d6db`, unchanged, built with
 its pinned `nightly-2024-02-26`, headless Chromium 151, same desktop, Orchard, 1 spend): 1 thread 21.2 s, 4 threads 7.6 s and 10.3 s. Our one-thread proof on the same
