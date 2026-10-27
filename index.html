@@ -44,6 +44,13 @@ stopBtn.onclick = () => {
   setDisabled(false);
 };
 let last = null;
+const deviceInfo = () => ({
+  userAgent: navigator.userAgent,
+  hardwareConcurrency: navigator.hardwareConcurrency,
+  deviceMemoryGB: navigator.deviceMemory ?? null,
+  secureContext: isSecureContext,
+  crossOriginIsolated,
+});
 for (const b of document.querySelectorAll('button[data-pool], button[data-scan]')) {
   b.onclick = () => {
     const isScan = b.dataset.scan !== undefined;
@@ -56,13 +63,7 @@ for (const b of document.querySelectorAll('button[data-pool], button[data-scan]'
       const r = ev.data.done;
       last = {
         ...r, meta,
-        device: {
-          userAgent: navigator.userAgent,
-          hardwareConcurrency: navigator.hardwareConcurrency,
-          deviceMemoryGB: navigator.deviceMemory ?? null,
-          secureContext: isSecureContext,
-          crossOriginIsolated,
-        },
+        device: deviceInfo(),
         ...(isScan
           ? { medianDecryptMs: median(r.runs.map(x => x.decryptMs)), medianAppendMs: median(r.runs.map(x => x.appendMs)) }
           : { medianProveMs: median(r.runs.map(x => x.proveMs)) }),
@@ -131,7 +132,7 @@ for (const b of document.querySelectorAll('button[data-multi]')) {
     current = null;
     last = {
       ...res, meta,
-      device: { userAgent: navigator.userAgent, hardwareConcurrency: navigator.hardwareConcurrency, deviceMemoryGB: navigator.deviceMemory ?? null, secureContext: isSecureContext, crossOriginIsolated },
+      device: deviceInfo(),
       medianWallMs: median(res.runs.map(x => x.wallMs)),
       at: new Date().toISOString(),
     };

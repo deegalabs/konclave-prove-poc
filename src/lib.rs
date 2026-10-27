@@ -152,6 +152,11 @@ mod tests {
     use super::*;
 
     #[test]
+    fn the_proving_and_scanning_harnesses_share_one_test_key_seed() {
+        assert_eq!(KEY_SEED, scan::KEY_SEED);
+    }
+
+    #[test]
     fn two_actions_prove_and_verify_for_each_pool() {
         for pool in ["orchard-v2", "ironwood-v3"] {
             let mut p = Poc::new(pool).map_err(|_| ()).unwrap();

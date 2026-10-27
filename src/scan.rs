@@ -3,7 +3,8 @@
 //! What is measured: the two CPU-heavy steps of a light-client scan, on a fixed corpus of compact actions
 //! generated natively by `examples/gen_fixture.rs` (deterministic seeds):
 //!   decrypt: `zcash_note_encryption::batch::try_compact_note_decryption` with one prepared incoming viewing key,
-//!            for the Orchard (note V2) or Ironwood (note V3) domain, building the per-action domain inside the call;
+//!            for the Orchard (note V2) or Ironwood (note V3) domain, building the per-action domain inside the call
+//!            (each call also clones every action into its (domain, action) pair, a small cost next to the decryption);
 //!   append:  `Frontier::append` of every action's note commitment (Sinsemilla hashing of the Orchard tree).
 //! What is NOT measured: block download, parsing of lightwalletd messages, database writes, witness upkeep for owned
 //! notes, spend detection, nullifier sets, a real chain's action density. It is not WebZjs.
@@ -17,7 +18,8 @@ use orchard::{
 use wasm_bindgen::prelude::*;
 use zcash_note_encryption::{batch::try_compact_note_decryption, EphemeralKeyBytes};
 
-/// Must match examples/gen_fixture.rs.
+/// The one test key seed: examples/gen_fixture.rs imports this constant, and a test in lib.rs checks it equals the
+/// proving harness's seed.
 pub const KEY_SEED: [u8; 32] = [7u8; 32];
 const MAGIC: &[u8; 4] = b"KCPS";
 const HEADER: usize = 16;
@@ -141,6 +143,31 @@ mod tests {
             assert!(s.actions() > 0);
             assert_eq!(s.decrypt(), s.expected_ours(), "{pool}");
             assert_eq!(s.append(), s.actions(), "{pool}");
+        }
+    }
+
+    #[test]
+    fn every_decrypted_note_is_for_our_address() {
+        let sk = Option::<SpendingKey>::from(SpendingKey::from_bytes(KEY_SEED)).unwrap();
+        let fvk = FullViewingKey::from(&sk);
+        let our_address = fvk.address_at(0u32, Scope::External);
+        let ivks = [PreparedIncomingViewingKey::new(&fvk.to_ivk(Scope::External))];
+        for pool in ["orchard-v2", "ironwood-v3"] {
+            let s = Scan::build(pool, &fixture(pool)).unwrap();
+            let recipients: Vec<orchard::Address> = match s.pool {
+                Pool::Orchard => {
+                    let outs: Vec<(OrchardDomain, CompactAction)> =
+                        s.actions.iter().map(|a| (OrchardDomain::for_compact_action(a), a.clone())).collect();
+                    try_compact_note_decryption(&ivks, &outs).into_iter().flatten().map(|((_, addr), _)| addr).collect()
+                }
+                Pool::Ironwood => {
+                    let outs: Vec<(IronwoodDomain, CompactAction)> =
+                        s.actions.iter().map(|a| (IronwoodDomain::for_compact_action(a), a.clone())).collect();
+                    try_compact_note_decryption(&ivks, &outs).into_iter().flatten().map(|((_, addr), _)| addr).collect()
+                }
+            };
+            assert_eq!(recipients.len() as u32, s.expected_ours(), "{pool}");
+            assert!(recipients.iter().all(|a| *a == our_address), "{pool}: a note decrypted for another address");
         }
     }
 

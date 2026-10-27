@@ -13,13 +13,15 @@ use orchard::{
     value::NoteValue,
     Address, Anchor,
 };
+use konclave_prove_poc::scan::KEY_SEED;
 use rand::{rngs::StdRng, Rng, RngCore, SeedableRng};
 use std::{fs, path::Path};
 
 const COUNT: usize = 10_000;
 const OUTPUTS_PER_BUNDLE: usize = 16;
 const OURS_EVERY: usize = 100;
-const KEY_SEED: [u8; 32] = [7u8; 32];
+// The count of "ours" below assumes whole bundles: no bundle is cut at the end.
+const _: () = assert!(COUNT % OUTPUTS_PER_BUNDLE == 0);
 
 fn key_from_seed(bytes: [u8; 32]) -> Option<(FullViewingKey, Address)> {
     let sk = Option::<SpendingKey>::from(SpendingKey::from_bytes(bytes))?;
@@ -53,13 +55,12 @@ fn generate(pool: &str, bv: BundleVersion) -> Vec<u8> {
             ours_flags.push(is_ours);
         }
         let (bundle, _) = builder.build::<i64>(&mut rng).unwrap().unwrap();
-        // The builder shuffles actions, so ours cannot be tracked by position: count them per bundle and trust
-        // the corpus-level count checked by the test (every bundle holds OUTPUTS_PER_BUNDLE actions).
+        // The builder shuffles actions, so ours cannot be tracked by position: count them per bundle. That is only
+        // right if each change output became exactly one action, which is asserted here and re-checked by the
+        // tests in src/scan.rs (they decrypt the corpus and expect exactly this many).
+        assert_eq!(bundle.actions().len(), OUTPUTS_PER_BUNDLE, "{pool}: one action per change output");
         our_count += ours_flags.iter().filter(|x| **x).count() as u32;
         for a in bundle.actions().iter() {
-            if produced == COUNT {
-                break;
-            }
             let enc = &a.encrypted_note().enc_ciphertext;
             body.extend_from_slice(&a.nullifier().to_bytes());
             body.extend_from_slice(&a.cmx().to_bytes());
@@ -67,8 +68,9 @@ fn generate(pool: &str, bv: BundleVersion) -> Vec<u8> {
             body.extend_from_slice(&enc[..52]);
             produced += 1;
         }
-        // If the last bundle was cut, ours may have been cut with it: recount below.
     }
+    assert_eq!(produced, COUNT);
+    assert_eq!(our_count as usize, COUNT / OURS_EVERY);
     let mut out = Vec::with_capacity(16 + body.len());
     out.extend_from_slice(b"KCPS");
     out.extend_from_slice(&1u32.to_le_bytes());

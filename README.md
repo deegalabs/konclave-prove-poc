@@ -50,7 +50,8 @@ numbers below are only a reference for what to expect.
 - **Trial decryption plus commitment-tree append, single thread, synthetic compact actions.** This is not a sync time and
   not WebZjs: no download, no database, no witnesses, no real chain density. The corpus is 10,000 compact actions per pool
   (`fixtures/`, written by `examples/gen_fixture.rs`, 1% decrypt for the test key). It uses orchard 0.15.5's batch
-  trial decryption and an Orchard-depth frontier append. Desktop (headless Chromium 151, 16 logical cores, 5 runs):
+  trial decryption and an Orchard-depth frontier append. Each decrypt call also builds the per-action domain and clones
+  the actions, as a scan does, which is a small cost next to the decryption. Desktop (headless Chromium 151, 16 logical cores, 5 runs):
   decrypt 2.8 s and append 5.3 s per 10,000 actions, Orchard and Ironwood alike.
 - **Comparison without wasm threads.** The decryption can be split over K Web Workers that each hold a slice and their own
   wasm instance (message passing only). Desktop wall time for the same 10,000 actions: K=1 2.82 s, K=2 1.49 s, K=4 0.76 s,
@@ -67,8 +68,9 @@ numbers below are only a reference for what to expect.
 - The phone results above are two actions only. ChainSafe's own `results/proving.csv` grows steeply with the number of
   spends (20 spends: 122 s). Larger bundles are measured on the desktop only, so far.
 - Synthetic bundle, no PCZT envelope, no real note witnesses.
-- No real scan: only the synthetic decryption and append above, no download, no database, no witnesses. No battery, no thermal curve over minutes (the S24 Chrome run 3 at 76.7 s and the A14 run 3 at 558.8 s
-  are unexplained outliers, no temperature was recorded), no iOS, no background tab.
+- No real scan: only the synthetic decryption and append above, no download, no database, no witnesses.
+- No battery, no thermal curve over minutes (the S24 Chrome run 3 at 76.7 s and the A14 run 3 at 558.8 s are unexplained
+  outliers, no temperature was recorded), no iOS, no background tab.
 - The medians include the first (cold) run. It was the fastest or among the fastest in most sessions, but not in all.
 
 ## Run it
