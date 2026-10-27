@@ -1,5 +1,5 @@
 {
-  "note": "Raw output sent by Daniel, 2026-10-15. Galaxy A14, 4 GB RAM (Daniel; not the A52 of the plan), Chrome 146, USB attached (adb reverse, localhost). Real Android version not recorded (UA is frozen at 10). Run 3 is a 3x outlier with no known cause. meta.commit f09189d is the HEAD at build time (source = 024f2d6); rebuild from a clean commit before the final report.",
+  "note": "Raw output sent by danielgorgonha, 2026-10-15. Galaxy A14, 4 GB RAM (danielgorgonha), Chrome 146, USB attached (adb reverse, localhost). Real Android version not recorded (UA is frozen at 10). Run 3 is a 3x outlier with no known cause. meta.commit f09189d is the HEAD at build time (source = 024f2d6).",
   "runs": [
     {
       "pool": "ironwood-v3",

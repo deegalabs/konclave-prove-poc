@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Scanning measurement, off the main thread, single thread: trial decryption plus commitment-tree append of a
 // fixed corpus of synthetic compact actions. Not a sync time: no download, no database, no witnesses, not WebZjs.
 import init, { Scan } from './pkg/konclave_prove_poc.js';

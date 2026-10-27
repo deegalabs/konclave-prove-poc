@@ -1,5 +1,5 @@
 {
-  "note": "Raw output sent by Daniel, 2026-10-15, right after the Chrome run on the same phone. Galaxy S24 Ultra, 12 GB RAM (Daniel), Android 16 (from the Firefox UA), Firefox 157, USB attached (adb reverse, localhost). Firefox does not expose deviceMemory. meta.commit f09189d is the HEAD at build time (source = 024f2d6).",
+  "note": "Raw output sent by danielgorgonha, 2026-10-15, right after the Chrome run on the same phone. Galaxy S24 Ultra, 12 GB RAM (danielgorgonha), Android 16 (from the Firefox UA), Firefox 157, USB attached (adb reverse, localhost). Firefox does not expose deviceMemory. meta.commit f09189d is the HEAD at build time (source = 024f2d6).",
   "runs": [
     {
       "pool": "ironwood-v3",

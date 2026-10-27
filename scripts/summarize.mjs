@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Prints one line per measurement found in results/, with medians recomputed from the raw runs.
 // usage: node scripts/summarize.mjs results
 // It reads the page's own JSON in all the shapes this repository holds: a bare result, a {results: [...]} session,

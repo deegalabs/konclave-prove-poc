@@ -87,3 +87,4 @@ fn main() {
     fs::write(dir.join("compact-orchard-v2.bin"), generate("orchard-v2", BundleVersion::orchard_v2())).unwrap();
     fs::write(dir.join("compact-ironwood-v3.bin"), generate("ironwood-v3", BundleVersion::ironwood_v3())).unwrap();
 }
+// SPDX-License-Identifier: MIT OR Apache-2.0

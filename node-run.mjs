@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Headless sanity run of the same wasm in Node (V8). Not a browser result: use index.html for those.
 // usage: node node-run.mjs <pool> <runs> [outputs]
 import { readFile } from 'node:fs/promises';

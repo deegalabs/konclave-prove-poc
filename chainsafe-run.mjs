@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Runs ChainSafe's UNCHANGED demo page (built from its repo) in headless Chromium and prints console lines.
 // usage: node run-cs.mjs <chromium|firefox> <threads> <spends> <distDir>
 import http from 'node:http';

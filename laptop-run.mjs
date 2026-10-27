@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Drives the same page in a desktop browser with Playwright and prints the page's JSON.
 // usage: node laptop-run.mjs <chromium|firefox> <orchard-v2|ironwood-v3> <runs> [url] [outputs]
 // The Playwright module path is passed through PLAYWRIGHT_MODULE (the repo's own install).

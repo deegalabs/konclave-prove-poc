@@ -1,5 +1,5 @@
 {
-  "note": "Raw output pasted by Daniel from the page, 2026-10-15. Galaxy A72, Chrome 155, connected by USB (adb reverse, localhost). meta.commit f09189d is the HEAD at build time; the built source had the prepare/prove/verify split that is committed in 024f2d6. Rebuild from a clean commit before the final report.",
+  "note": "Raw output pasted by danielgorgonha from the page, 2026-10-15. Galaxy A72, Chrome 155, connected by USB (adb reverse, localhost). meta.commit f09189d is the HEAD at build time; the built source had the prepare/prove/verify split that is committed in 024f2d6.",
   "runs": [
     {
       "pool": "orchard-v2",

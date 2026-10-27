@@ -1,5 +1,5 @@
 {
-  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy A14 (4 GB), Chrome 155 (UA frozen at Android 10), USB attached (adb reverse, localhost), meta.commit ad147d6. Order: scan (one thread) 20:06Z, K = 4 20:09Z, K = 8 20:09Z, then a 2-action proof at 20:44Z. The proof's first verify took 1,222,514 ms (about 20 minutes) against 113 s in the 15/10 Chrome session; cause unknown, not part of any prove median. Nothing edited.",
+  "note": "Copy-all output of one page session, pasted by danielgorgonha on 2026-10-27, Galaxy A14 (4 GB), Chrome 155 (UA frozen at Android 10), USB attached (adb reverse, localhost), meta.commit ad147d6. Order: scan (one thread) 20:06Z, K = 4 20:09Z, K = 8 20:09Z, then a 2-action proof at 20:44Z. The proof's first verify took 1,222,514 ms (about 20 minutes) against 113 s in the 15/10 Chrome session; cause unknown, not part of any prove median. Nothing edited.",
   "results": [
     {
       "kind": "scan-trial-decryption-plus-tree-append", "pool": "ironwood-v3",

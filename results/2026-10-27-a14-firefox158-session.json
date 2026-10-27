@@ -1,5 +1,5 @@
 {
-  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy A14 (4 GB, Android 15 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. Order in the session: scan (one thread) at 19:01Z, K = 4 at 19:04Z, then after a break a 2-action proof at 19:55Z and K = 8 at 19:56Z (the K = 8 run therefore ran on a warm phone, the K = 4 run on a cooler one). Nothing edited.",
+  "note": "Copy-all output of one page session, pasted by danielgorgonha on 2026-10-27, Galaxy A14 (4 GB, Android 15 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. Order in the session: scan (one thread) at 19:01Z, K = 4 at 19:04Z, then after a break a 2-action proof at 19:55Z and K = 8 at 19:56Z (the K = 8 run therefore ran on a warm phone, the K = 4 run on a cooler one). Nothing edited.",
   "results": [
     {
       "kind": "scan-trial-decryption-plus-tree-append", "pool": "ironwood-v3",

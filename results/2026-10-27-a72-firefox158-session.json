@@ -1,5 +1,5 @@
 {
-  "note": "Copy-all output of one page session, pasted by Daniel on 2026-10-27, Galaxy A72 (6 GB, Android 14 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in two; the halves were joined at the 'crates' line and nothing else was edited. The device label is as typed (\"Galaxy A72 6gbp\"). The third result is a 2-action proof the page also ran; the fourth (K = 8) comes from a second paste of the same page session, which repeated the first three results unchanged.",
+  "note": "Copy-all output of one page session, pasted by danielgorgonha on 2026-10-27, Galaxy A72 (6 GB, Android 14 per the Firefox UA), Firefox 158, USB attached (adb reverse, localhost), meta.commit ad147d6. The chat split the paste in two; the halves were joined at the 'crates' line and nothing else was edited. The device label is as typed (\"Galaxy A72 6gbp\"). The third result is a 2-action proof the page also ran; the fourth (K = 8) comes from a second paste of the same page session, which repeated the first three results unchanged.",
   "results": [
     {
       "kind": "scan-trial-decryption-plus-tree-append",

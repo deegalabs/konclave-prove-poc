@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // One data-parallel worker of the multi-worker decryption comparison: it holds its slice of the corpus in its own
 // wasm instance (no SharedArrayBuffer, no COOP/COEP) and trial-decrypts it on 'go'. These are Web Workers with
 // message passing, NOT wasm threads.

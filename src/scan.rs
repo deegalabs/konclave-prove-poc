@@ -193,3 +193,4 @@ mod tests {
         assert!(Scan::build("sapling", &fixture("orchard-v2")).is_err());
     }
 }
+// SPDX-License-Identifier: MIT OR Apache-2.0

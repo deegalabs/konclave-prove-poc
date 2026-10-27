@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Headless sanity run of the scanning measurement in Node (V8). Not a browser result.
 // usage: node node-scan.mjs <orchard-v2|ironwood-v3> <runs>
 import { readFile } from 'node:fs/promises';

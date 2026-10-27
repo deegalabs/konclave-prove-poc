@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Runs the benchmark off the main thread so the page stays responsive. Single thread, no SharedArrayBuffer.
 import init, { Poc } from './pkg/konclave_prove_poc.js';
 
