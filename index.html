@@ -65,7 +65,10 @@
 
 <script type="module">
 const $ = (id) => document.getElementById(id);
-const meta = await fetch('./pkg/meta.json').then(r => r.json()).catch(() => ({}));
+// Not awaited: the handlers below must be attached at once, or a click on a slow connection is lost. The stamp
+// is read long before any result exists.
+let meta = {};
+fetch('./pkg/meta.json').then(r => r.json()).then((m) => { meta = m; }).catch(() => {});
 const out = $('out'), statusEl = $('status'), elapsedEl = $('elapsed'), summary = $('summary'), stopBtn = $('stop'), labelEl = $('label');
 const SCAN = 'scan-trial-decryption-plus-tree-append', MULTI = 'scan-decrypt-multi-worker';
 const history = [];
